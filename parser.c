@@ -65,10 +65,73 @@ void parse_file ( char * filename,
     f = stdin;
   else
     f = fopen(filename, "r");
-  
+  color c;
+  c.green = 255;
+  c.red = 0;
+  c.blue = 0;
   while ( fgets(line, 255, f) != NULL ) {
     line[strlen(line)-1]='\0';
     printf(":%s:\n",line);
+    if(strcmp(line,"line") == 0){
+      fgets(line,255,f);
+      double x,y,z,z1,y1,x1;
+      sscanf(line,"%lf %lf %lf %lf %lf %lf",&x,&y,&z,&x1,&y1,&z1);
+      add_edge(edges,x,y,z,x1,y1,z1);
+    }
+    else if(strcmp(line,"ident") == 0){
+      ident(transform);
+    }
+    else if (strcmp(line,"rotate") == 0){
+      fgets(line,255,f);
+      double deg;
+      char ax;
+      struct matrix * m;
+      sscanf(line,"%c %lf",&ax,&deg);
+      if(ax =='x'){
+        m = make_rotX(deg);
+      }
+      else if(ax == 'y'){
+	m = make_rotY(deg);
+      }
+      else if(ax =='z'){
+	m = make_rotZ(deg);
+      }
+      matrix_mult(m,transform);
+      free_matrix(m);
+    } 
+    else if(strcmp(line,"scale") == 0){
+      fgets(line,255,f);
+      double x,y,z;
+      sscanf(line,"%lf %lf %lf",&x,&y,&z);
+      struct matrix * m = make_scale(x,y,z);
+      matrix_mult(m,transform);
+      free_matrix(m);
+    }
+    else if(strcmp(line,"move") == 0){
+      fgets(line,255,f);
+      double x,y,z;
+      sscanf(line,"%lf %lf %lf",&x,&y,&z);
+      struct matrix * m = make_translate(x,y,z);
+      matrix_mult(m,transform);
+      free_matrix(m);
+    }
+    else if(strcmp(line,"apply") == 0){
+      matrix_mult(transform,edges);
+    }
+    else if(strcmp(line,"display") == 0){
+      clear_screen(s);
+      draw_lines(edges,s,c);
+      display(s);
+    }
+    else if(strcmp(line,"save") == 0){
+      fgets(line,255,f);
+      clear_screen(s);
+      draw_lines(edges,s,c);
+      save_extension(s,line);
+    }
+    else if(strcmp(line,"quit") == 0){
+      exit(0);
+    }
   }
 }
   

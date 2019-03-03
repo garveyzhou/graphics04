@@ -27,7 +27,7 @@ struct matrix * make_translate(double x, double y, double z) {
   m->m[0][3] = x;
   m->m[1][3] = y;
   m->m[2][3] = z;
-  return m
+  return m;
 }
 
 /*======== struct matrix * make_scale() ==========
@@ -43,7 +43,7 @@ struct matrix * make_scale(double x, double y, double z) {
   m->m[0][0] = x;
   m->m[1][1] = y;
   m->m[2][2] = z;
-  return m
+  return m;
 }
 
 /*======== struct matrix * make_rotX() ==========
@@ -59,7 +59,7 @@ struct matrix * make_rotX(double theta) {
   m->m[1][2] = -sin(theta * M_PI /180);
   m->m[2][1] = sin(theta * M_PI / 180);
   m->m[2][2] = cos(theta * M_PI / 180);
-  return m
+  return m;
 }
 
 /*======== struct matrix * make_rotY() ==========
@@ -75,7 +75,7 @@ struct matrix * make_rotY(double theta) {
   m->m[0][2] = -sin(theta * M_PI /180);
   m->m[2][0] = sin(theta * M_PI / 180);
   m->m[2][2] = cos(theta * M_PI / 180);
-  return m
+  return m;
 }
 
 /*======== struct matrix * make_rotZ() ==========
