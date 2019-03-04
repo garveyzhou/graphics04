@@ -72,8 +72,8 @@ struct matrix * make_rotY(double theta) {
   struct matrix * m = new_matrix(4,4);
   ident(m);
   m->m[0][0] = cos(theta * M_PI / 180);
-  m->m[0][2] = -sin(theta * M_PI /180);
-  m->m[2][0] = sin(theta * M_PI / 180);
+  m->m[0][2] = sin(theta * M_PI /180);
+  m->m[2][0] = -sin(theta * M_PI / 180);
   m->m[2][2] = cos(theta * M_PI / 180);
   return m;
 }
